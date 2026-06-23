@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
-import SearchBar from "./components/SearchBar/SearchBar";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./components/ImageModal/ImageModal";
+import SearchBar from './components/SearchBar/SearchBar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import Loader from './components/Loader/Loader';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
 
-import { fetchImages } from "./services/api";
+import { fetchImages } from './services/api';
 
 export default function App() {
-  const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   useEffect(() => {
-    if (query === "") return;
+    if (!query) return;
 
     async function getImages() {
       try {
@@ -33,7 +34,7 @@ export default function App() {
         if (page === 1) {
           setImages(data.results);
         } else {
-          setImages((prev) => [...prev, ...data.results]);
+          setImages(prevImages => [...prevImages, ...data.results]);
         }
       } catch {
         setError(true);
@@ -45,30 +46,30 @@ export default function App() {
     getImages();
   }, [query, page]);
 
-  const handleSearch = (newQuery) => {
+  const handleSearch = newQuery => {
     setQuery(newQuery);
     setImages([]);
     setPage(1);
   };
 
   const handleLoadMore = () => {
-    setPage((prev) => prev + 1);
+    setPage(prevPage => prevPage + 1);
   };
 
-  const openModal = (image) => {
+  const openModal = image => {
     setSelectedImage(image);
-    setIsModalOpen(true);
+    setIsOpenModal(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedImage(null);
+    setIsOpenModal(false);
   };
 
   return (
     <>
       <SearchBar onSubmit={handleSearch} />
-      <Toaster />
+      <Toaster position="top-right" />
 
       {error && <ErrorMessage />}
 
@@ -81,7 +82,7 @@ export default function App() {
       )}
 
       <ImageModal
-        isOpen={isModalOpen}
+        isOpen={isOpenModal}
         onClose={closeModal}
         image={selectedImage}
       />

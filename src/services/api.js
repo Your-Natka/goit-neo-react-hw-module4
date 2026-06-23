@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
-const ACCESS_KEY = "ТУТ_ТВІЙ_ACCESS_KEY";
+axios.defaults.baseURL = 'https://api.unsplash.com';
 
-axios.defaults.baseURL = "https://api.unsplash.com";
+const ACCESS_KEY = 'EP6xGKyS54rZDz4us-SIpaV9VJyUgJsapxCpS6v8gf4';
 
 export async function fetchImages(query, page) {
-  const response = await axios.get("/search/photos", {
+  const response = await axios.get('/search/photos', {
     params: {
       query,
       page,

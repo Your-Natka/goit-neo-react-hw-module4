@@ -1,14 +1,14 @@
-import css from "./SearchBar.module.css";
-import toast from "react-hot-toast";
+import css from './SearchBar.module.css';
+import toast from 'react-hot-toast';
 
 export default function SearchBar({ onSubmit }) {
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
 
     const value = event.target.elements.query.value.trim();
 
-    if (value === "") {
-      toast.error("Please enter search text!");
+    if (value === '') {
+      toast.error('Please enter search text!');
       return;
     }
 
@@ -27,7 +27,9 @@ export default function SearchBar({ onSubmit }) {
           autoFocus
           placeholder="Search images and photos"
         />
-        <button type="submit">Search</button>
+        <button className={css.button} type="submit">
+          Search
+        </button>
       </form>
     </header>
   );

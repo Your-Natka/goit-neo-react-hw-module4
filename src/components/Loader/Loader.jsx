@@ -1,5 +1,9 @@
-import ClipLoader from "react-spinners/ClipLoader";
+import css from './Loader.module.css';
 
 export default function Loader() {
-  return <ClipLoader />;
+  return (
+    <div className={css.loader}>
+      <div className={css.spinner}></div>
+    </div>
+  );
 }
